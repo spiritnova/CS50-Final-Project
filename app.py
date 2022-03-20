@@ -6,6 +6,8 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 
+import sqlite3
+
 
 from helpers import usd, login_required
 
@@ -37,6 +39,8 @@ Session(app)
 
 # TODO configure sql database
 
+
+
 @app.route("/")
 def index():
-    return render_template(index.html)
+    return render_template("index.html")
