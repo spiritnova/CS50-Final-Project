@@ -47,6 +47,6 @@ def index():
 
 
 
-@app.route("/register")
-def register():
+@app.route("/login")
+def login():
     return render_template("register.html")
