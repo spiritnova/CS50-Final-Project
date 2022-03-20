@@ -6,7 +6,7 @@ from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 
-import sqlite3
+import pymysql
 
 
 from helpers import usd, login_required
@@ -37,10 +37,16 @@ app.config["SESSION_PERMANENT"] = False
 app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
-# TODO configure sql database
-
-
+#database connection
+connection = pymysql.connect(host="localhost",user="root",passwd="",database="bookStore" )
+db = connection.cursor()
 
 @app.route("/")
 def index():
     return render_template("index.html")
+
+
+
+@app.route("/register")
+def register():
+    return render_template("register.html")

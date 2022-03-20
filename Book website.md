@@ -41,3 +41,8 @@
 - Remove the item
 - Checking out requires login
 - Cash will be hardcoded
+
+**Data Base**
+
+- Book table includes (title, author, genre, type)
+- user table includes (username, hash, membership_type, cash)
