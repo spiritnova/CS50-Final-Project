@@ -38,8 +38,8 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 #database connection
-connection = pymysql.connect(host="localhost",user="root",passwd="",database="bookStore" )
-db = connection.cursor()
+# connection = pymysql.connect(host="localhost",user="root",passwd="",database="bookStore" )
+# db = connection.cursor()
 
 @app.route("/")
 def index():
@@ -49,4 +49,4 @@ def index():
 
 @app.route("/login")
 def login():
-    return render_template("register.html")
+    return render_template("login.html")
