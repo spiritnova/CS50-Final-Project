@@ -9,7 +9,7 @@ from werkzeug.exceptions import default_exceptions, HTTPException, InternalServe
 import pymysql
 
 
-from helpers import usd, login_required
+from helpers import usd, login_required, apology
 
 from datetime import datetime
 
@@ -47,6 +47,14 @@ def index():
 
 
 
-@app.route("/login")
+@app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html")
+    
+    # Forget any user_id
+    session.clear()
+
+    # user submitted the form
+    if request.method == "POST":
+
+        if not request.form.get("username"):
+            return apology("username cannot be blank")
