@@ -306,9 +306,9 @@ section .contentBx .formBx .sci li:hover
     background: #ff4584;
 }
 
-section .contentBx .formBx .sci li img
+section .contentBx .formBx .sci li i
 {
-    transform: scale(0.5);
+    transform: scale(2);
     filter: invert(1);
 }
 
