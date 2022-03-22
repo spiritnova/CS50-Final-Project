@@ -7,42 +7,42 @@
 {% block main %}
 
 
-    <section>
-        <div class="imgBx">
-            <img src="/static/pexels-pixabay-261887.jpg">
+<section>
+    <div class="imgBx">
+        <img src="/static/pexels-pixabay-261887.jpg">
+    </div>
+    <div class="contentBx">
+        <div class="formBx">
+            <h2>Register</h2>
+            <form action="/register" method="post">
+                <div class="inputBx">
+                    <span>Username</span>
+                    <input type="text" name="username" autocomplete="off" autofocus>
+                </div>
+                <div class="inputBx">
+                    <span>Password</span>
+                    <input type="password" name="password">
+                </div>
+                <div class="inputBx">
+                    <span>Confirm your password</span>
+                    <input type="password" name="confirmation">
+                </div>
+                <div class="inputBx">
+                    <input type="submit" value="Register">
+                </div>
+                <div class="inputBx">
+                    <p>Already a user? <a href="/login">Log in</a></p>
+                </div>
+            </form>
+            <h3>Login with social media</h3>
+            <ul class="sci">
+                <li><i class="fa-brands fa-facebook"></i></li>
+                <li><i class="fa-brands fa-twitter"></i></li>
+                <li><i class="fa-brands fa-instagram"></i></li>
+            </ul>
         </div>
-        <div class="contentBx">
-            <div class="formBx">
-                <h2>Register</h2>
-                <form action="/register" method="post">
-                    <div class="inputBx">
-                        <span>Username</span>
-                        <input type="text" name="username" autocomplete="off" autofocus>
-                    </div>
-                    <div class="inputBx">
-                        <span>Password</span>
-                        <input type="password" name="password">
-                    </div>
-                    <div class="inputBx">
-                        <span>Confirm your password</span>
-                        <input type="password" name="confirmation">
-                    </div>
-                    <div class="inputBx">
-                        <input type="submit" value ="Register">
-                    </div>
-                    <div class="inputBx">
-                        <p>Already a user? <a href="/login">Log in</a></p>
-                    </div>
-                </form>
-                <h3>Login with social media</h3>
-                <ul class="sci">
-                    <li><i class="fa-brands fa-facebook"></i></li>
-                    <li><i class="fa-brands fa-twitter"></i></li>
-                    <li><i class="fa-brands fa-instagram"></i></li>
-                </ul>
-            </div>
-        </div>
-    </section>
+    </div>
+</section>
 
 
 {% endblock %}
