@@ -37,7 +37,9 @@
             </li>
             {% if session.user_id %}
             <li>
-                <a href="/logout">Logout</a>
+                <a  data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <span><i class="fa-solid fa-user"></i></span>
+                    {{ session["username"] }}</a>
             </li>
             {% else %}
             <li>
@@ -45,6 +47,27 @@
             </li>
             {% endif %}
         </ul>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div class="offcanvas-header">
+                <div class="offcanvasCover">
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    <div class="offcanvas-pfp">
+                        <img src="/static/pfp.png">
+                    </div>
+                </div>
+            </div>
+            <div class="offcanvas-body">
+              <div>
+                <ul class="offcanvasLinks">
+                  <li><a href="/profile">Profile settings</a></li>
+                  <li><a href="#">Wallet</a></li>
+                  <li><a href="#">Library</a></li>
+                  <li><a href="/logout">Logout</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
         <div>
             <button class ="regBtn" href="#">

@@ -8,6 +8,10 @@ body{
      box-sizing: border-box;
      font-family: 'Poppins', sans-serif;
  }
+
+ dl, ol, ul{
+     margin-bottom: 0;
+ }
  
  nav{
      display: flex;
@@ -41,9 +45,10 @@ body{
      font-size: 16px;
      align-items: center;
      text-transform: uppercase;
+     padding: inherit;
  }
  .nav-links a:hover{
-   color: red;
+   color: #e91e63;
  }
  .burger{
      display: none;
@@ -347,4 +352,106 @@ section .contentBx .formBx .sci li i
         margin: 30px 0 10px;
         font-weight: 500;
     }
+}
+
+
+
+/* PROFILE OFFCANVAS RELATED STUFF */
+ul.offcanvasLinks
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family:'Poppins',Arial, Helvetica, sans-serif !important;
+    list-style: none;
+    width: 500px;
+    padding: 0px;
+}
+
+ul.offcanvasLinks li
+{
+    padding: 0;
+    background-color: #fff;
+    margin: 0;
+    width: 100%;
+}
+
+
+.offcanvasLinks a
+{
+    font-size: large;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: #ff4584;
+    display: block;
+    padding: 20px 10px;
+}
+
+.offcanvasLinks li a:hover
+{
+    background-color: #1b1b1b;
+    opacity: 0.9;
+}
+
+.offcanvas-pfp
+{
+    height: 120px;
+    width: 120px;
+    background-color: rgb(197, 10, 10);
+    border-radius: 50%;
+    display: inline-block;
+    position: relative;
+    z-index: 555;
+    margin: 32px 0 10px 149px;
+}
+
+.offcanvas-pfp img{
+    max-width: 100%;
+    object-fit: cover;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.offcanvas-body
+{
+    padding: 0;
+}
+.offcanvas-header
+{
+    padding: 0;
+}
+
+.offcanvasCover
+{
+    background-color: #1b1b1b;
+    height: 150px;
+    margin-bottom: 50px;
+    width: 100%;
+    display: block;
+    position: relative;
+    z-index: 5;
+    border-bottom: 4px solid #e91e63;
+}
+
+.text-reset{
+    margin-left: 90%;
+    padding: 1rem;
+    color: white;
+}
+
+.offcanvas-header .btn-close
+{
+    padding: 1.5rem 0.5rem;
+    color: white;
+}
+.btn-close:focus
+{
+    box-shadow: none;
+}
+
+
+.btn-close
+{
+    filter: invert(100%);
+    -webkit-filter: invert(100%);
 }

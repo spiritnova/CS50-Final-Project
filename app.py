@@ -8,7 +8,6 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from cs50 import SQL
 
-
 from helpers import usd, login_required, apology
 
 from datetime import datetime
@@ -76,6 +75,8 @@ def login():
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
 
+        session["username"] = rows[0]["username"]
+
         # redirect user to home page once logged in
         return redirect("/")
 
@@ -126,4 +127,7 @@ def register():
 
         return redirect("/")
 
-
+@app.route("/profile")
+@login_required
+def profile():
+    return render_template("profile.html")
