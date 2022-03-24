@@ -6,9 +6,11 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+
 from cs50 import SQL
 
-from helpers import usd, login_required, apology
+from bs4 import BeautifulSoup
+from helpers import usd, login_required
 
 from datetime import datetime
 
@@ -56,10 +58,10 @@ def login():
     if request.method == "POST":
 
         if not request.form.get("username"):
-            return apology("username cannot be blank")
+            return render_template("apology.html", message="username cannot be blank")
 
         elif not request.form.get("password"):
-            return apology("password cannot be blank")
+            return render_template("apology.html", message="password cannot be blank")
 
         username = request.form.get("username")
         password = request.form.get("password")
@@ -70,7 +72,7 @@ def login():
 
         # Ensure username exists and password is correct
         if len(rows) != 1 or not check_password_hash(rows[0]["hash"], password):
-            return apology("invalid username and or password", 403)
+            return render_template("apology.html", message="invalid username and/or password")
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
@@ -104,18 +106,17 @@ def register():
         confirmation = request.form["confirmation"]
 
         if username == "":
-            return apology("Invalid username")
+            return render_template("apology.html", message="Invalid username")
         if len(db.execute("SELECT username FROM users where username =?", username)) > 0:
-            return apology("Username already exists")
+            return render_template("apology.html", message="Username already exists")
         if password == "":
-            return apology("Passowrd cannot be blank")
+            return render_template("apology.html", message="Password cannot be blank")
         if password != confirmation:
-            return apology("Password does not match")
-
+            return render_template("apology.html", message="Password do not match")
         # Password rules
         pattern = re.compile("^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$")
         if not pattern.match(request.form.get("password")):
-            return apology("Password must at least have a minimum of 8 characters, at least one letter, one number and a one special character")
+            return render_template("apology.html", message="Password must at least have a minimum of 8 characters, at least one letter, one number and a one special character")
                 
         # adding user to the database
         db.execute("INSERT INTO users (username, hash) VALUES (?, ?)", username, generate_password_hash(password) )
@@ -127,7 +128,25 @@ def register():
 
         return redirect("/")
 
-@app.route("/profile")
+@app.route("/profile/")
 @login_required
 def profile():
-    return render_template("profile.html")
+    return redirect("/profile/edit")
+
+@app.route("/profile/edit")
+@login_required
+def profile_edit():
+    return render_template("profileEdit.html")
+
+@app.route("/profile/password/change")
+@login_required
+def profile_password_change():
+    return render_template("passwordChange.html")
+
+@app.route("/profile/wallet")
+@login_required
+def profile_wallet():
+    user_id = session["user_id"]
+    cash = db.execute("SELECT cash FROM users where id=?", user_id)[0]["cash"]
+    return render_template("profileWallet.html", cash=cash)
+

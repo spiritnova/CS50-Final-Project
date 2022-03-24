@@ -415,6 +415,7 @@ ul.offcanvasLinks li
 .offcanvas-body
 {
     padding: 0;
+    overflow-x: hidden;
 }
 .offcanvas-header
 {
@@ -425,7 +426,7 @@ ul.offcanvasLinks li
 {
     background-color: #1b1b1b;
     height: 150px;
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     width: 100%;
     display: block;
     position: relative;
@@ -454,4 +455,95 @@ ul.offcanvasLinks li
 {
     filter: invert(100%);
     -webkit-filter: invert(100%);
+}
+
+
+/* ---------------------------------------PROFILE SETTINGS-------------------------------------------------------------*/
+
+.pfp-nav
+{
+    list-style: none;
+    flex-direction: column;
+    font-family:'Poppins',Arial, Helvetica, sans-serif !important;
+    padding: 0px;
+    margin: 0;
+    height: 500px;
+    background-color: #1b1b1b;
+    width: 192px;
+    border-right: 3px solid #e91e63;
+}
+
+.pfp-nav li
+{
+    padding: 0;
+    background-color: #1b1b1b;
+    margin: 0;
+}
+
+.pfp-nav a
+{
+    color: white;
+    background: none;
+    text-decoration: none;
+    display: block;
+    padding: 20px 16px 16px;
+    border-left: 3px solid transparent;
+    line-height: 20px;
+}
+
+
+.pfp-nav li a:hover
+{
+    color: #e91e63;
+    background-color: #353535;
+    border-left-color:#e91e63;
+}
+
+
+
+.profile-box
+{
+    border: 1px solid #1b1b1b;
+    border-left: 2px solid #e91e63;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 10px
+}
+
+.profile-box-change
+{
+    border: 1px solid #1b1b1b;
+    border-left: 2px solid #e91e63;
+    padding: 10px 10px
+}
+
+.profile-img img
+{
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+}
+
+.form-control:focus
+{
+    box-shadow: none;
+}
+
+.form-select:focus
+{
+    box-shadow: none;
+}
+
+.btn-primary
+{
+    background-color: #292929;
+    color: #e91e63;
+}
+
+.btn-primary:hover
+{
+    background-color: #fff;
+    color: #e91e63;
+    border-color: rgb(43, 43, 43);
 }
