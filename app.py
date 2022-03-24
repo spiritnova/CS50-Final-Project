@@ -150,3 +150,8 @@ def profile_wallet():
     cash = db.execute("SELECT cash FROM users where id=?", user_id)[0]["cash"]
     return render_template("profileWallet.html", cash=cash)
 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template("404.html")
+

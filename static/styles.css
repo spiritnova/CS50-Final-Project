@@ -547,3 +547,45 @@ ul.offcanvasLinks li
     color: #e91e63;
     border-color: rgb(43, 43, 43);
 }
+
+.profile-cash
+{
+    font-weight: 900;
+    font-size: large;
+}
+
+.error-title
+{
+    font-weight:900;
+    text-align: center;
+}
+.error-content
+{
+    text-align: center;
+}
+
+.error-header
+{
+    font-weight: 900;
+    text-align: center;
+}
+div.error-back
+{
+    text-align: center;
+    margin-top: 5px;
+}
+.error-goback
+{
+    background-color: #f53677;
+    color: white;
+    border-radius: 25px;
+    text-decoration: none;
+    padding: 1.25rem;
+    margin-top: 5px;
+}
+
+.error-goback:hover
+{
+    background-color: #292929;
+    color: #f53677;
+}
