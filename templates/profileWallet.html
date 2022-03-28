@@ -1,24 +1,68 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Wallet
+Wallet
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid">
+<div class="container-fluid profile-card">
     <div class="row justify-content-center">
-      <div class="col-2">
+        <div class="col-2">
             <ul class="pfp-nav">
+                <li><a href="/profile">Profile</a></li>
                 <li><a href="/profile/edit">Edit Profile</a></li>
                 <li><a href="/profile/password/change">Change Password</a></li>
                 <li><a href="/profile/wallet">Wallet</a></li>
-                <li><a href="">Language</a></li>
+                <li><a href="/profile/language">Language</a></li>
             </ul>
-      </div>
+        </div>
 
-      <div class="col-6 profile-box-change">
-          <span class="profile-cash">
-              {{ cash | usd }}
-          </span>
-      </div>
+        <div class="col-10 profile-box-change">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4"><span class="balance ms-2 float-start">BALANCE</span></div>
+                    <div class="col-4"></div>
+                    <div class="col-4 mb-2">
+                        <span class="profile-cash">
+                            {{ cash | usd }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <form class="wallet-form" action="/profile/wallet" method="POST">
+                <div class="row">
+                    <span>
+                        <input class="balloon mb-2" id="state" type="number" min="5" placeholder="Enter amount"
+                            name="cashValue">
+                    </span>
+                </div>
+                <!-- Button trigger modal -->
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                    Add
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+                    tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to add cash to your balance?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="submit" class="btn btn-primary">Understood</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

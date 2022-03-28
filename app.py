@@ -6,6 +6,8 @@ from flask_session import Session
 from tempfile import mkdtemp
 from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
+from werkzeug.utils import secure_filename
+import uuid as uuid
 
 from cs50 import SQL
 
@@ -42,6 +44,30 @@ Session(app)
 db = SQL("sqlite:///bookStore.db")
 
 
+# Creating the User table
+db.execute("CREATE TABLE IF NOT EXISTS users ( \
+    id       INTEGER   PRIMARY KEY, \
+    username TEXT      NOT NULL, \
+    email    VARCHAR(100), \
+    hash     TEXT      NOT NULL, \
+    cash     NUMERICAL DEFAULT (1000), \
+    picture  STRING      DEFAULT [pfp.png], \
+    gender   TEXT      DEFAULT[none] \
+);")
+
+# Creating a table to keep track of bought books
+
+db.execute("CREATE TABLE IF NOT EXISTS transactions (id INTEGER, user_id NUMERIC NOT NULL, book_title NOT NULL, \
+    book_amount NUMERIC NOT NULL, price NUMERIC NOT NULL, time TEXT, PRIMARY KEY(id), FOREIGN KEY (user_id) \
+        REFERENCES users(id))")
+
+
+# Create a picture folder directory variable
+picFolder = "./static/pictures/"
+app.config['picFolder'] = picFolder
+
+
+
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -76,7 +102,7 @@ def login():
 
         # Remember which user has logged in
         session["user_id"] = rows[0]["id"]
-
+        session["picture"] = rows[0]["picture"]
         session["username"] = rows[0]["username"]
 
         # redirect user to home page once logged in
@@ -95,6 +121,7 @@ def logout():
 
     # Redirect user to login form
     return redirect("/login")
+
 
 @app.route("/register", methods=["GET", "POST"])
 def register():
@@ -128,14 +155,50 @@ def register():
 
         return redirect("/")
 
-@app.route("/profile/")
+@app.route("/profile")
 @login_required
 def profile():
-    return redirect("/profile/edit")
+    user_id = session["user_id"]
+    username = db.execute("SELECT username from users where id =?", user_id)[0]["username"]
+    email = db.execute("SELECT email from users where id =?", user_id)[0]["email"]
+    gender = db.execute("SELECT gender from users where id =?", user_id)[0]["gender"]
+    return render_template("profile.html", username=username, email=email, gender=gender)
 
-@app.route("/profile/edit")
+@app.route("/profile/edit", methods=["POST", "GET"])
 @login_required
 def profile_edit():
+    user_id = session["user_id"]
+    if request.method == "POST":
+        gender = request.form.get("gender")
+
+        # Handling gender now
+        gender = request.form.get("gender")
+
+        if int(gender) == 1:
+            setGender = "Male"
+        elif int(gender) == 2:
+            setGender = "Female"
+        elif int(gender) == 3:
+            setGender = "Prefer not to say"
+        else:
+            setGender = "None"
+        db.execute("UPDATE users SET gender=? where id=?", setGender, user_id)
+
+        # Handling the email
+        email = request.form.get("email")
+
+        pattern = re.compile("^(.+)@(.+)$")
+        if not pattern.match(email):
+            return render_template("apology.html", message="Please enter a valid email")
+
+        db.execute("UPDATE users SET email=? where id=?", email, user_id)
+
+
+        # Handling the username
+        username = request.form.get("username")
+        db.execute("UPDATE users SET username=? where id=?", username, user_id)
+
+        return redirect("/profile/edit")    
     return render_template("profileEdit.html")
 
 @app.route("/profile/password/change")
@@ -143,13 +206,62 @@ def profile_edit():
 def profile_password_change():
     return render_template("passwordChange.html")
 
-@app.route("/profile/wallet")
+@app.route("/profile/wallet", methods=["POST", "GET"])
 @login_required
 def profile_wallet():
     user_id = session["user_id"]
     cash = db.execute("SELECT cash FROM users where id=?", user_id)[0]["cash"]
+    if request.method == "POST":
+
+        addCash = request.form.get("cashValue")
+
+        if not addCash:
+            return render_template("apology.html", message="Please enter a valid cash | Not Blank")
+
+        if int(addCash) < 5:
+            return render_template("apology.html", message="Please enter an amount greated than $5")
+        total = cash + int(addCash)
+
+        db.execute("UPDATE users SET cash =? where id =?", total, user_id)
+
+        return redirect("/profile/wallet")
     return render_template("profileWallet.html", cash=cash)
 
+@app.route("/profile/language")
+@login_required
+def profile_language():
+    user_id = session["user_id"]
+    return render_template("language.html")
+
+
+@app.route("/profile/edit/image", methods=["POST", "GET"])
+@login_required
+def profilePictureChangeHandler():
+    user_id = session["user_id"]
+    if request.method == "POST":
+
+        pic = request.files["picture"]
+
+        if not pic:
+            return render_template("apology.html", message="Failed to Submit blank file")
+
+        # The code below grabs the name of the picture
+        pic_filename = secure_filename(pic.filename)
+
+        # Set UUID
+        pic_name = str(uuid.uuid1()) + "_" + pic_filename
+
+        # saving the image
+        saver = request.files["picture"]
+
+        saver.save(os.path.join(app.config['picFolder'], pic_name))
+
+        # Changing it to string to save it in the db
+        pic = pic_name
+
+        db.execute("UPDATE users SET picture=? WHERE id=?", pic, user_id)
+        return redirect("/profile/edit")
+    return render_template("/profile/edit")
 
 @app.errorhandler(404)
 def page_not_found(e):

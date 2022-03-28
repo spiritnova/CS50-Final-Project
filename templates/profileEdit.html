@@ -1,46 +1,51 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Apology
+Edit profile
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid">
-    <div class="row justify-content-center">
-      <div class="col-2">
-            <ul class="pfp-nav">
-                <li><a href="/profile/edit">Edit Profile</a></li>
-                <li><a href="/profile/password/change">Change Password</a></li>
-                <li><a href="/profile/wallet">Wallet</a></li>
-                <li><a href="">Language</a></li>
-            </ul>
+<div class="container-fluid profile-card">
+  <div class="row justify-content-center profile-card">
+    <div class="col-2">
+      <ul class="pfp-nav">
+        <li><a href="/profile">Profile</a></li>
+        <li><a href="/profile/edit">Edit Profile</a></li>
+        <li><a href="/profile/password/change">Change Password</a></li>
+        <li><a href="/profile/wallet">Wallet</a></li>
+        <li><a href="/profile/language">Language</a></li>
+      </ul>
+    </div>
+    <div class="col-10 profile-box">
+      <div class="profile-img">
+        <img src="/static/pictures/{{ session["picture"] }}">
       </div>
-      <div class="col-6 profile-box">
-        <div class="profile-img">
-            <img src="/static/pfp.png">
-        </div>
+      <form action="/profile/edit/image" method="POST" enctype="multipart/form-data">
         <div class="mb-3">
-            <label for="formFile" class="form-label">Change your profile picture</label>
-            <input class="form-control" type="file" id="formFile">
-          </div>
-        <form action="/profile" method="POST">
-            <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="floatingInputValue" placeholder="username" name="username" autocomplete="off">
-                <label for="floatingInputValue">Username</label>
-            </div>
-            <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com" name="email" autocomplete="off">
-                <label for="floatingInputValue">Email</label>
-            </div>
-            <select class="form-select mb-3" aria-label="Default select example">
-                <option selected>Gender</option>
-                <option value="1">Male</option>
-                <option value="2">Female</option>
-                <option value="3">Prefer not to say</option>
-            </select>
-            <button type="submit" class="btn btn-primary">Submit</>
+          <label class="form-label"><button  class ="imageBtn" type="submit">Change your profile picture</button></label>
+          <input name="picture" class="form-control" type="file" id="formFile">
+        </div>
         </form>
-      </div>
+        <form action="/profile/edit" method="POST">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingInputValue" placeholder="username" name="username"
+            autocomplete="off">
+          <label for="floatingInputValue">Username</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="floatingInputValue" placeholder="name@example.com" name="email"
+            autocomplete="off">
+          <label for="floatingInputValue">Email</label>
+        </div>
+        <select name="gender" class="form-select mb-3" aria-label="Default select example">
+          <option selected>Gender</option>
+          <option value="1">Male</option>
+          <option value="2">Female</option>
+          <option value="3">Prefer not to say</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Submit</>
+      </form>
     </div>
   </div>
+</div>
 {% endblock %}

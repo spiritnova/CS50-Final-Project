@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Language
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid profile-card">
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <ul class="pfp-nav">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile/edit">Edit Profile</a></li>
+                <li><a href="/profile/password/change">Change Password</a></li>
+                <li><a href="/profile/wallet">Wallet</a></li>
+                <li><a href="/profile/language">Language</a></li>
+            </ul>
+        </div>
+
+        <div class="col-10 profile-box">
+            <form action="/profile/language" method="post">
+                <select class="form-select mb-2" aria-label="Default select example">
+                    <option selected>Choose your preffered language</option>
+                    <option value="1">English (en-us)</option>
+                    <option value="2">Arabic (ar)</option>
+                    <option value="3">Japanese (jp)</option>
+                  </select>
+
+                  <button class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+{% endblock %}

@@ -53,7 +53,11 @@
                 <div class="offcanvasCover">
                     <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     <div class="offcanvas-pfp">
-                        <img src="/static/pfp.png">
+                        {% if session.user_id %}
+                        <img src="/static/pictures/{{ session["picture"] }}">
+                        {% else %}
+                        <img src="/static/pictures/pfp.png">
+                        {% endif %}
                     </div>
                 </div>
             </div>

@@ -406,9 +406,10 @@ ul.offcanvasLinks li
 }
 
 .offcanvas-pfp img{
+    width: 120px;
     max-width: 100%;
     object-fit: cover;
-    height: 100%;
+    height: 120px;
     border-radius: 50%;
 }
 
@@ -468,21 +469,22 @@ ul.offcanvasLinks li
     padding: 0px;
     margin: 0;
     height: 500px;
-    background-color: #1b1b1b;
+    background-color: #ffffff;
     width: 192px;
-    border-right: 3px solid #e91e63;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-right: 1px solid #e91e63;
 }
 
 .pfp-nav li
 {
     padding: 0;
-    background-color: #1b1b1b;
+    background-color: #ffffff;
     margin: 0;
 }
 
 .pfp-nav a
 {
-    color: white;
+    color: #e91e63;
     background: none;
     text-decoration: none;
     display: block;
@@ -495,20 +497,28 @@ ul.offcanvasLinks li
 .pfp-nav li a:hover
 {
     color: #e91e63;
-    background-color: #353535;
-    border-left-color:#e91e63;
+    background-color: rgba(165, 165, 165, 0.1);
+    border-left-color:#eb4079;
 }
 
 
 
 .profile-box
 {
-    border: 1px solid #1b1b1b;
+    border: 1px solid  rgba(0, 0, 0, 0.2);
     border-left: 2px solid #e91e63;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 10px 10px
+}
+
+@media (max-width: 768px)
+{
+    .profile-box{
+        margin-left: 129px;
+        width: 241px;
+    }
 }
 
 .profile-box-change
@@ -539,19 +549,45 @@ ul.offcanvasLinks li
 {
     background-color: #292929;
     color: #e91e63;
+    border: 2px solid transparent;
 }
-
+.btn:focus
+{
+    box-shadow: none;
+}
 .btn-primary:hover
 {
     background-color: #fff;
     color: #e91e63;
-    border-color: rgb(43, 43, 43);
+    border: 2px solid #e91e63;
+    transition: 0.3s border ease-in-out;
+    height: 0%;
+}
+.btn-primary:active
+{
+    background-color: #fff;
+    color: #e91e63;
+    border-color: rgb(43, 43, 43); 
 }
 
-.profile-cash
+.btn-primary:focus
 {
-    font-weight: 900;
-    font-size: large;
+    background-color: #fff;
+    color: #e91e63;
+    border-color: rgb(43, 43, 43);
+    box-shadow: 0;
+}
+
+.btn-primary:focus:active
+{
+    box-shadow: 0 0 0 0.25rem rgba(67, 67, 68, 0.5);
+}
+
+.btn-check:focus{
+    background-color: #fff;
+    color: #e91e63;
+    border-color: rgb(43, 43, 43);
+    box-shadow: 0;
 }
 
 .error-title
@@ -589,3 +625,177 @@ div.error-back
     background-color: #292929;
     color: #f53677;
 }
+
+
+/*-----------------------WALLET-----------------------------------*/
+.balance
+{
+    font-weight: 900;
+    font-size: 30px;
+}
+.profile-cash
+{
+    font-weight: 900;
+    font-size: large;
+    margin-right: 1rem;
+    font-size: 30px;
+}
+
+.balloon
+{
+    display: inline-block;
+    width: 215px;
+    padding: 10px 0 10px 15px;
+    font-weight: 400;
+    color: #e91e63;
+    background: #383838;
+    border: 1px solid #1b1b1b;
+    border-radius: 3px;
+    outline: 0;
+    text-indent: 50px;
+    transition: all .3s ease-in-out;
+    justify-content: center;
+}
+
+.balloon::placeholder
+{
+    color: #e91e63;
+}
+
+.balloon:focus, .balloon:active
+{
+    color: #e91e63;
+    text-indent: 0;
+    background: #fff;
+}
+
+.wallet-form
+{
+    justify-content: center;
+    text-align: center;
+}
+
+.profile-card
+{
+    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
+                inset -5px -5px -5px rgba(255, 255, 255, 0.5),
+                        -5px -5px -5px rgba(255, 255, 255, 0.5),
+                        -5px -5px -5px rgba(255, 255, 255, 0.5);
+}
+
+
+.imageBtn
+{
+    background: none;
+    border: none;
+    color:#0095f6;
+    font-weight: bold;
+}
+
+/* ----------------------PROFILE SETTINGS TEST BOX------------------------------
+.profile-navigation
+{
+    width: 30%;
+    float: left;
+    background-color: #03a9f4;
+}
+.profile-links
+{
+    background-color: rgb(255, 255, 255);
+    min-height: 92vh;
+    display: block;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.profile-links li
+{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.profile-links a
+{
+    display: block;
+    text-decoration: none;
+    color: #e91e63;
+    letter-spacing: 1px;
+    font-size: 20px;
+    padding: 20px 16px 16px;
+    line-height: 20px;
+    border-left: 3px solid transparent;
+}
+
+.profile-links li a:hover
+{
+    border-left: 3px solid #e91e63;
+    background-color: rgba(219, 219, 219, 0.2);
+}
+.profile-link a:active
+{
+    border-left: 3px solid #e91e63;
+}
+.profile-contents
+{
+    width: 70%;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.profile-img-cover
+{
+    justify-content: flex-start;
+    flex-direction: row;
+}
+
+
+.profile-img-cover img
+{
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-left: 20px;
+}
+
+.profile-img-side
+{
+    float: right;
+    margin-right: 100px;
+    padding: 20px;
+}
+
+.profile-img-side p
+{
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+.profile-img-side a
+{
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profileInputForm
+{
+    text-align: center;
+    padding: 20px;
+}
+
+.profileInputForm label
+{
+    font-weight: bold;
+    margin-right: 10px;
+    
+}
+
+.profileInputForm input
+{
+    border-radius: 4px;
+    border:1px solid rgba(0, 0, 0, 0.2);
+    padding: 3px;
+    margin-bottom: 5px;
+    display: block;
+    width: 300px;
+} */

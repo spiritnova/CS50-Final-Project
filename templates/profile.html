@@ -1,0 +1,30 @@
+{% extends "layout.html" %}
+
+{% block title %}
+profile
+{% endblock %}
+
+{% block main %}
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-2">
+            <ul class="pfp-nav">
+                <li><a href="/profile">Profile</a></li>
+                <li><a href="/profile/edit">Edit Profile</a></li>
+                <li><a href="/profile/password/change">Change Password</a></li>
+                <li><a href="/profile/wallet">Wallet</a></li>
+                <li><a href="/profile/language">Language</a></li>
+            </ul>
+        </div>
+
+        <div class="col-10 profile-box-change">
+            <div class="col-12 profile-img text-center mb-5">
+                <img src="/static/pictures/{{ session["picture"] }}">
+            </div>
+            <div class="col-12 text-center">
+                <p>Username: {{ username }}</p>
+                <p>Email: {{ email }}</p>
+                <p>Gender: {{ gender }}</p>
+            </div>  
+        </div>
+{% endblock %}
