@@ -19,12 +19,14 @@ profile
 
         <div class="col-10 profile-box-change">
             <div class="col-12 profile-img text-center mb-5">
-                <img src="/static/pictures/{{ session["picture"] }}">
+                <img src="/static/pictures/{{ session[" picture"] }}">
             </div>
             <div class="col-12 text-center">
                 <p>Username: {{ username }}</p>
                 <p>Email: {{ email }}</p>
                 <p>Gender: {{ gender }}</p>
-            </div>  
+            </div>
         </div>
+    </div>
+</div>
 {% endblock %}

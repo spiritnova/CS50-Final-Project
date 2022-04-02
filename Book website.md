@@ -23,10 +23,6 @@
 
 ****
 
-**Register Page**
-
-- Including separate Register as user AND Register as Author
-- Password (8 character long, at least: one number, one character, one special character)
 
 **Book lists**
 

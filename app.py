@@ -1,5 +1,7 @@
 import os
 import re
+import json
+import requests
 
 from flask import Flask, redirect, render_template, request, session, g
 from flask_session import Session
@@ -8,13 +10,16 @@ from werkzeug.security import check_password_hash, generate_password_hash
 from werkzeug.exceptions import default_exceptions, HTTPException, InternalServerError
 from werkzeug.utils import secure_filename
 import uuid as uuid
+from urllib.request import urlopen
 
 from cs50 import SQL
 
 from bs4 import BeautifulSoup
-from helpers import usd, login_required
+from helpers import *
 
 from datetime import datetime
+
+bookapi = "https://www.googleapis.com/books/v1/volumes?q="
 
 app = Flask(__name__)
 
@@ -57,9 +62,29 @@ db.execute("CREATE TABLE IF NOT EXISTS users ( \
 
 # Creating a table to keep track of bought books
 
-db.execute("CREATE TABLE IF NOT EXISTS transactions (id INTEGER, user_id NUMERIC NOT NULL, book_title NOT NULL, \
-    book_amount NUMERIC NOT NULL, price NUMERIC NOT NULL, time TEXT, PRIMARY KEY(id), FOREIGN KEY (user_id) \
-        REFERENCES users(id))")
+db.execute("CREATE TABLE IF NOT EXISTS transactions ( \
+    id          INTEGER, \
+    user_id     NUMERIC NOT NULL, \
+    book_id     INTEGER, \
+    book_title  NOT NULL, \
+    book_amount NUMERIC NOT NULL, \
+    price       NUMERIC NOT NULL, \
+    time TEXT, \
+    PRIMARY KEY(id), FOREIGN KEY (user_id) \
+        REFERENCES users(id), \
+        FOREIGN KEY(book_id) REFERENCES bookList(book_id) );")
+
+
+db.execute("CREATE TABLE IF NOT EXISTS bookList ( \
+    book_id     INTEGER, \
+    title  VARCHAR(255) NOT NULL, \
+    author TEXT NOT NULL, \
+    genre TEXT NOT NULL, \
+    publishedDate NUMERIC NOT NULL, \
+    price NUMERIC NOT NULL, \
+    rating DECIMAL(4, 2) NOT NULL, \
+    PRIMARY KEY(book_id) \
+);")
 
 
 # Create a picture folder directory variable
@@ -68,9 +93,33 @@ app.config['picFolder'] = picFolder
 
 
 
-@app.route("/")
+@app.route("/", methods=["POST", "GET"])
 def index():
-    return render_template("index.html")
+    api_key = "AIzaSyAUjIe6CgPoD9FGgxEDbwZvWdBeZj3Mxks"
+    os.environ.get("API_KEY")
+    if request.method == "POST":
+
+        if not request.form.get("title"):
+            return render_template("apology.html", message="title cannot be blank")
+
+        book = request.form.get("title")
+
+        url = f"https://www.googleapis.com/books/v1/volumes?q={book}&printType=books&maxResults=20&:keyes&key={api_key}"
+
+        response = requests.get(url)
+
+        data = response.json()
+        
+        return render_template("bookList.html", books=data["items"])
+
+    # Get books from db
+
+    rows = db.execute("SELECT title, picture from bookList where genre like ?", "%" + "Science-Fiction" + "%")
+    rows_H = db.execute("SELECT title, picture from bookList where genre like ?", "%" + "horror" + "%")
+    rows_R = db.execute("SELECT title, picture from bookList where genre like ? LIMIT 10", "%" + "Romance" + "%")
+    rows_F = db.execute("SELECT title, picture from bookList where genre like ? LIMIT 10", "%" + "fantasy" + "%")
+
+    return render_template("index.html", rows=rows, rows_H=rows_H, rows_R=rows_R, rows_F=rows_F)
 
 
 
@@ -262,6 +311,14 @@ def profilePictureChangeHandler():
         db.execute("UPDATE users SET picture=? WHERE id=?", pic, user_id)
         return redirect("/profile/edit")
     return render_template("/profile/edit")
+
+
+@app.route("/bookList/readmore/<string:bookInfo>", methods=["GET"])
+def readmore(bookInfo):
+    bookInfo = json.loads(bookInfo)
+    bookdetails = bookInfo
+    print(bookdetails)
+    return render_template("readmore.html", books=bookdetails)
 
 @app.errorhandler(404)
 def page_not_found(e):

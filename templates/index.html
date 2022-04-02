@@ -1,15 +1,236 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Home
+Home
 {% endblock %}
 
 {% block main %}
 
+<div class="container col-12 searchCover mb-5">
+    <form action="/" method="post">
+      <div class="search-bar-form">
+        <input type="text" id="title" class="text-center searchBar ms-5" placeholder="Search Books!" name="title">
+        <button type="submit" id="search" class="btn btn-secondary">Search</button>
+      </div>
+    </form>
+</div>
+<hr>
+<h1 class="text-center featured-books">FEATURED BOOKS</h1>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+          <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+        </div>
+        <div class="carousel-inner">
+          <div class="carousel-item active" data-bs-interval="10000">
+            <img src="/static/Book covers/Peaky blinders.jpg" class="d-block carousel-images" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Peaky Blinders</h5>
+              <p>Peaky Blinders is a British gangster drama television series created by Steven Knight.</p>
+              <p>
+                <span class="rating">4.4</span>
+              </p>
+              <p>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </p>
+              <a href="" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/static/Book covers/Anna karanina.jpg" class="d-block carousel-images" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Anna karenina</h5>
+              <p>Greta Garbo in Anna Karenina (1935), directed by Clarence Brown.</p>
+              <p>
+                <span class="rating">4.1</span>
+              </p>
+              <p>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </p>
+              <a href="" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/static/Book covers/invisible man.jpg" class="d-block carousel-images" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Invisible Man</h5>
+              <p>Invisible Man is a novel by Ralph Ellison</p>
+              <p>
+                <span class="rating">3.9</span>
+              </p>
+              <p>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </p>
+              <a href="" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+          <div class="carousel-item" data-bs-interval="10000">
+            <img src="/static/Book covers/don quixote.jpg" class="d-block carousel-images" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>Don Quixote</h5>
+              <p>Don Quixote is a Spanish novel by Miguel de Cervantes.</p>
+              <p>
+                <span class="rating">4.1</span>
+              </p>
+              <p>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </p>
+              <a href="" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+          <div class="carousel-item">
+            <img src="/static/Book covers/tokillamockinbird.jpg" class="d-block carousel-images" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+              <h5>To Kill a Mockingbird</h5>
+              <p>Harper Lee's classic work To Kill a Mockingbird (1960).</p>
+              <p>
+                <span class="rating">4.3</span>
+              </p>
+              <p>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half"></i>
+              </p>
+              <a href="" class="btn btn-primary">Buy Now</a>
+            </div>
+          </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
 
-    <h1>HELLO WORLD</h1>
-
-
+<!---SCIENCE FICTION ROW-->
+<div class="container-fluid genre-container">
+  <div class="genre-header">
+    <h4 class="text-white genre-title">Sci-Fi</h4>
+    <a href="#" class="btn btn-primary genre-btn">See More</a>
+  </div>
+</br>
+</br>
+</br>
+  <div class="row">
+    {% for row in rows %}
+    <div class="col-1 mx-2 g-0 p-0">
+        <div class="card genre-card">
+          <div class="card-body genre-body">
+            <img class="genre-img img-fluid" src="/static/Book covers/{{ row["picture"] }}">
+          </div>
+          <div class="card-footer text-white genre-caption">
+            {{ row["title"] }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+</br>
+<hr>
+<!------------HORROR ROW----------------->
+<div class="container-fluid genre-container">
+  <div class="genre-header">
+    <h4 class="text-white genre-title">Horror</h4>
+    <a href="#" class="btn btn-primary genre-btn">See More</a>
+  </div>
+</br>
+</br>
+</br>
+  <div class="row">
+    {% for row in rows_H %}
+    <div class="col-1 mx-2 g-0 p-0">
+        <div class="card genre-card">
+          <div class="card-body genre-body">
+            <img class="genre-img img-fluid" src="/static/Book covers/{{ row["picture"] }}">
+          </div>
+          <div class="card-footer text-white genre-caption">
+            {{ row["title"] }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+<hr>
+<!------------Romance ROW----------------->
+<div class="container-fluid genre-container">
+  <div class="genre-header">
+    <h4 class="text-white genre-title">Romance</h4>
+    <a href="#" class="btn btn-primary genre-btn">See More</a>
+  </div>
+</br>
+</br>
+</br>
+  <div class="row">
+    {% for row in rows_R %}
+    <div class="col-1 mx-2 g-0 p-0">
+        <div class="card genre-card">
+          <div class="card-body genre-body">
+            <img class="genre-img img-fluid" src="/static/Book covers/{{ row["picture"] }}">
+          </div>
+          <div class="card-footer text-white genre-caption">
+            {{ row["title"] }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+<hr>
+<!------------Fantasy ROW----------------->
+<div class="container-fluid genre-container">
+  <div class="genre-header">
+    <h4 class="text-white genre-title">Fantasy</h4>
+    <a href="#" class="btn btn-primary genre-btn">See More</a>
+  </div>
+</br>
+</br>
+</br>
+  <div class="row">
+    {% for row in rows_F %}
+    <div class="col-1 mx-2 g-0 p-0">
+        <div class="card genre-card">
+          <div class="card-body genre-body">
+            <img class="genre-img img-fluid" src="/static/Book covers/{{ row["picture"] }}">
+          </div>
+          <div class="card-footer text-white genre-caption">
+            {{ row["title"] }}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+  </div>
+</div>
+<hr>
 {% endblock %}
-
-

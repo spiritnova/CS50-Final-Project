@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Book List
+{% endblock %}
+
+{% block main %}
+<div class="container">
+    <div class="row row-cols-1 row-cols-md-2">
+        {% for book in books %}
+        <div class="col-6">
+            <div class="card mb-3" style="height: 300px; max-width: 540px;">
+                <div class="row g-0">
+                    <div class="col-md-4">
+                        {% if book.volumeInfo.imageLinks %}
+                        <img src="{{ book.volumeInfo.imageLinks.thumbnail }}" class="img-fluid rounded-start w-100" alt="...">
+                        {% else %}
+                        <img class="rounded-start w-100" src="/static/default book cover.jpg">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 id="book-header"class="card-title">{{ book.volumeInfo.title }}</h5>
+                            {% if book.volumeInfo.authors %}
+                            <p class="card-text">{{ book.volumeInfo.authors }}</p>
+                            {% endif %}
+                            <p class="card-text">{{ book.volumeInfo.subtitle }}</p>
+                        </div>
+                        <div class="card-body">
+                            <a class="btn btn-primary card-link" href="/bookList/readmore/" onClick="getBook()">Read More</a>
+                            <a class="btn btn-primary card-link" href="#">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script>
+    function getBook() {
+        let bookInfo = document.getElementById("book-header").innerText
+        const request = new XMLHttpRequest()
+        request.open('POST', `/bookList/readmore/${JSON.stringify(bookInfo)}`)
+        request.send()
+    }
+</script>
+{% endblock %}
