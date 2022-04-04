@@ -218,7 +218,6 @@ def profile():
 def profile_edit():
     user_id = session["user_id"]
     if request.method == "POST":
-        gender = request.form.get("gender")
 
         # Handling gender now
         gender = request.form.get("gender")
@@ -313,12 +312,99 @@ def profilePictureChangeHandler():
     return render_template("/profile/edit")
 
 
-@app.route("/bookList/readmore/<string:bookInfo>", methods=["GET"])
-def readmore(bookInfo):
-    bookInfo = json.loads(bookInfo)
-    bookdetails = bookInfo
-    print(bookdetails)
-    return render_template("readmore.html", books=bookdetails)
+@app.route("/readmore/<genre>")
+def readmoreSciFi(genre):
+
+    genres = genre # Used to change the title of the page dynamically
+    rows = db.execute("SELECT * from bookList WHERE genre LIKE ?", "%" + genre + "%")
+    return render_template("readmore.html", rows=rows, genre=genres)
+
+
+@app.route("/books", methods=["POST", "GET"])
+def books():
+    if request.method == "POST":
+        title = request.form.get("search")
+        if title:
+            searchedTitle = db.execute("SELECT * from bookList where title LIKE ?", "%" + title + "%")
+            return render_template("books.html", rows=searchedTitle)
+        if not title:
+            return render_template("apology.html", message="Title cannot be blank")
+
+    rows = db.execute("SELECT * from bookList")
+    return render_template("books.html", rows=rows)
+
+@app.route("/books/select", methods=["POST","GET"])
+def genreSelect():
+    if request.method == "POST":
+
+        genre = request.form.get("genreSelect") 
+
+        if int(genre) == 1:
+            rowsA = db.execute("SELECT * from bookList where genre like ?", "%" + "Action" + "%")
+            return render_template("books.html", rows=rowsA)
+        elif int(genre) == 2:
+            rowsAd = db.execute("SELECT * from bookList where genre like ?", "%" + "Adventure" + "%")
+            return render_template("books.html", rows=rowsAd)
+        elif int(genre) == 3:
+            rowsS = db.execute("SELECT * from bookList where genre like ?", "%" + "Science-Fiction" + "%")
+            return render_template("books.html", rows=rowsS)
+        elif int(genre) == 4:
+            rowsH = db.execute("SELECT * from bookList where genre like ?", "%" + "Horror" + "%")
+            return render_template("books.html", rows=rowsH)
+        elif int(genre) == 5:
+            rowsR = db.execute("SELECT * from bookList where genre like ?", "%" + "Romance" + "%")
+            return render_template("books.html", rows=rowsR)
+        elif int(genre) == 6:
+            rowsF = db.execute("SELECT * from bookList where genre like ?", "%" + "Fantasy" + "%")
+            return render_template("books.html", rows=rowsF)
+        elif int(genre) == 7:
+            rowsB = db.execute("SELECT * from bookList where genre like ?", "%" + "Biography" + "%")
+            return render_template("books.html", rows=rowsB)
+        elif int(genre) == 8:
+            rowsfi = db.execute("SELECT * from bookList where genre like ?", "%" + "Fiction" + "%")
+            return render_template("books.html", rows=rowsfi)
+        elif int(genre) == 9:
+            rowsT = db.execute("SELECT * from bookList where genre like ?", "%" + "Thriller" + "%")
+            return render_template("books.html", rows=rowsT)
+        elif int(genre) == 10:
+            rowsC = db.execute("SELECT * from bookList where genre like ?", "%" + "Comedy" + "%")
+            return render_template("books.html", rows=rowsC)
+        elif int(genre) == 11:
+            rowsP = db.execute("SELECT * from bookList where genre like ?", "%" + "Psychological" + "%")
+            return render_template("books.html", rows=rowsP)
+        elif int(genre) == 12:
+            rowsD = db.execute("SELECT * from bookList where genre like ?", "%" + "Drama" + "%")
+            return render_template("books.html", rows=rowsD)
+        elif int(genre) == 13:
+            rowsCr = db.execute("SELECT * from bookList where genre like ?", "%" + "Crime" + "%")
+            return render_template("books.html", rows=rowsCr)
+        elif int(genre) == 14:
+            rowsDef = db.execute("SELECT * from bookList")
+            return render_template("books.html", rows=rowsDef)
+
+
+    rows = db.execute("SELECT * from bookList")
+    return render_template("books.html", rows=rows)
+
+
+@app.route("/buy/<title>")
+# @login_required
+def buy(title):
+
+    user_id = session["user_id"]
+    price = db.execute("SELECT price FROM bookList where title =?", title)[0]["price"]
+    cash = db.execute("SELECT cash from users where id=?", user_id)[0]["cash"]
+    print(price)
+
+    total = cash - price
+
+    if total < 0:
+        return render_template("apology.html", message="Insufficient funds")
+    else:
+        db.execute("UPDATE users SET cash=? where id=?", total, user_id)
+    print(price)
+
+    return redirect("/")
 
 @app.errorhandler(404)
 def page_not_found(e):

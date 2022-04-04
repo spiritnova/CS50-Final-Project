@@ -27,7 +27,6 @@ Book List
                             <p class="card-text">{{ book.volumeInfo.subtitle }}</p>
                         </div>
                         <div class="card-body">
-                            <a class="btn btn-primary card-link" href="/bookList/readmore/" onClick="getBook()">Read More</a>
                             <a class="btn btn-primary card-link" href="#">Buy Now</a>
                         </div>
                     </div>
@@ -37,12 +36,4 @@ Book List
         {% endfor %}
     </div>
 </div>
-<script>
-    function getBook() {
-        let bookInfo = document.getElementById("book-header").innerText
-        const request = new XMLHttpRequest()
-        request.open('POST', `/bookList/readmore/${JSON.stringify(bookInfo)}`)
-        request.send()
-    }
-</script>
 {% endblock %}

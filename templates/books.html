@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Books
+{% endblock %}
+
+{% block main %}
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <form action="/books/select" method="post">
+        <select name="genreSelect" class="form-select" aria-label="Default select example">
+          <option selected value="14">Select Genre</option>
+          <option value="1">Action</option>
+          <option value="2">Adventure</option>
+          <option value="3">Science-Fiction</option>
+          <option value="4">Horror</option>
+          <option value="5">Romance</option>
+          <option value="6">Fantasy</option>
+          <option value="7">Biography</option>
+          <option value="8">Fiction</option>
+          <option value="9">Thriller</option>
+          <option value="10">Comedy</option>
+          <option value="11">Psychological</option>
+          <option value="12">Drama</option>
+          <option value="13">Crime</option>
+        </select>
+        <br>
+        <button class="genreBTN" type="submit">Search</button>
+      </form>
+    </div>
+    <div class="col-6">
+      <div class="searchContainer">
+        <i class="fa-solid fa-magnifying-glass searchIcon"></i>
+        <form action="/books" method="post">
+          <input type="text" name="search" class="bookSearch" placeholder="search...">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<br>
+<div class="container">
+  <div class="row">
+    {% for row in rows %}
+    <div class="col-lg-4 col-md-auto">
+      <div class="card mb-3" style="max-width: 540px; height: 300px;">
+        <div class="row g-0">
+          <div class="col-md-4">
+            <img src="/static/Book covers/{{ row["picture"] }}" class="img-fluid rounded-start" alt="...">
+          </div>
+          <div class="col-md-8">
+            <div class="card-body">
+                <h5 class="card-title" name="bookTitle"><span class="readmore-txt">Title: </span> {{ row["title"] }}
+                </h5>
+                <p class="card-text"><span class="readmore-txt">Author: </span>{{ row["author"] }}</p>
+                <p class="card-text"><span class="readmore-txt">Price: </span>{{ row["price"] | usd }}</p>
+                <p class="card-text"><span class="readmore-txt">Rating: </span>{{ row["rating"] }}</p>
+                <p class="card-text"><span class="readmore-txt">Published Year: </span>{{ row["publishedDate"] }}</p>
+                <a href="/buy/{{ row["title"] }}" class="btn btn-primary" name="purchase">Buy now</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
