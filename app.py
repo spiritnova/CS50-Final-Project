@@ -87,6 +87,16 @@ db.execute("CREATE TABLE IF NOT EXISTS bookList ( \
 );")
 
 
+# TEMP CART DB
+db.execute("CREATE TABLE IF NOT EXISTS cart ( \
+    user_id INTEGER NOT NULL, \
+    title VARCHAR(255) NOT NULL, \
+    price NUMERIC, \
+    picture STRING, \
+    FOREIGN KEY(user_id) REFERENCES users(id) \
+)")
+
+
 # Create a picture folder directory variable
 picFolder = "./static/pictures/"
 app.config['picFolder'] = picFolder
@@ -387,26 +397,43 @@ def genreSelect():
     return render_template("books.html", rows=rows)
 
 
-@app.route("/buy/<title>")
+@app.route("/buy/<title>/<price>/<picture>")
 # @login_required
-def buy(title):
+def buy(title, price, picture):
 
     user_id = session["user_id"]
-    price = db.execute("SELECT price FROM bookList where title =?", title)[0]["price"]
-    cash = db.execute("SELECT cash from users where id=?", user_id)[0]["cash"]
-    print(price)
 
-    total = cash - price
+    # adding to the cart db
+    db.execute("INSERT INTO cart (title, price, picture,  user_id) VALUES(?, ?, ?, ?)", title, price, picture, user_id)
 
-    if total < 0:
-        return render_template("apology.html", message="Insufficient funds")
-    else:
-        db.execute("UPDATE users SET cash=? where id=?", total, user_id)
-    print(price)
+    return ('', 204)
 
-    return redirect("/")
+
+@app.route("/cart")
+@login_required
+def cart():
+
+    user_id = session["user_id"]
+
+    # Get items from the cart
+    items = db.execute("SELECT * from cart where user_id=?", user_id)
+
+    
+
+    return render_template("cart.html", rows=items)
+
+@app.route("/cart/remove/<title>")
+def cartRemove(title):
+    user_id = session["user_id"]
+
+    # Remove items from database
+    remove = db.execute("DELETE from cart where title=? and user_id=?", title, user_id)
+
+    return redirect("/cart")
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template("404.html")
+
+
 

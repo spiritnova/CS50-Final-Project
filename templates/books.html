@@ -58,7 +58,7 @@ Books
                 <p class="card-text"><span class="readmore-txt">Price: </span>{{ row["price"] | usd }}</p>
                 <p class="card-text"><span class="readmore-txt">Rating: </span>{{ row["rating"] }}</p>
                 <p class="card-text"><span class="readmore-txt">Published Year: </span>{{ row["publishedDate"] }}</p>
-                <a href="/buy/{{ row["title"] }}" class="btn btn-primary" name="purchase">Buy now</a>
+                <a href="/buy/{{ row["title"] }}/{{ row["price"] }}/{{ row["picture"] }}" class="btn btn-primary" name="purchase">Add to Cart</a>
             </div>
           </div>
         </div>

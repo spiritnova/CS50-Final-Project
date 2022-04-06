@@ -1,0 +1,80 @@
+{% extends "layout.html" %}
+
+{% block title %}
+Cart
+{% endblock %}
+
+{% block main %}
+<h1 class="text-white mb-5">Shopping Cart</h1>
+
+<div class="shopping-cart">
+
+  <div class="column-labels row">
+    <h4 class="col-4 text-center">Item Name</h4>
+    <h4 class="col-2">Price</h4>
+    <h4 class="col-2">Quantity</h4>
+    <h4 class="col-2"></h4>
+    <h4 class="col-2">Total</h4>
+  </div>
+
+  {% for row in rows %}
+  <div class="product">
+    <div class="row">
+      <div class="product-image col-2">
+        <img src="/static/Book covers/{{ row["picture"] }}">
+      </div>
+      <div class="product-details col-2">
+        <div class="product-title">{{ row["title"] }}</div>
+      </div>
+      <div class="product-price col-2">${{ row["price"] }}</div>
+      <div class="product-quantity col-2">
+        <input onblur="getVal()" id="quantity" type="number" value="1" min="1">
+      </div>
+      <div class="product-removal col-2">
+        <a class="remove-product" href="/cart/remove/{{ row["title"] }}">
+          Remove
+        </a>
+      </div>
+      <div class="product-line-price col-2"></div>
+    </div>
+  </div>
+  {% endfor %}
+
+  <div class="totals col-4">
+    <div class="totals-item">
+      <label class="col-10">Subtotal</label>
+      <div class="totals-value" id="cart-subtotal">$71.97</div>
+    </div>
+    <div class="totals-item">
+      <label class="col-10">Shipping</label>
+      <div class="totals-value" id="cart-shipping">$15.00</div>
+    </div>
+    <div class="totals-item totals-item-total">
+      <label class="col-10">Grand Total</label>
+      <div class="totals-value" id="cart-total">$90.57</div>
+    </div>
+  </div>
+
+  <button class="checkout">Checkout</button>
+</div>
+
+
+<script>
+  $(".remove-product").on('click', function () {
+    $(this).closest('div.product').remove();
+  });
+
+
+  function getVal(){
+    let quantity = document.querySelector('#quantity').value;
+    let price = JSON.parse('{{ rows[0]["price"] | tojson }}');
+
+    // console.log(price)
+    let total = quantity * price;
+
+    document.getElementsByClassName(".product-line-price").appendChild(total);
+    // console.log(total)
+  }
+</script>
+
+{% endblock %}
