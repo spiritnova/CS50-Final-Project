@@ -452,20 +452,22 @@ ul.offcanvasLinks li {
 
 .pfp-nav {
     list-style: none;
-    flex-direction: column;
     font-family: 'Poppins', Arial, Helvetica, sans-serif !important;
     padding: 0px;
     margin: 0;
-    height: 500px;
-    background-color: #ffffff;
-    width: 192px;
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-right: 1px solid #e91e63;
+    display: flex;
+    margin-bottom: 15px;
+}
+
+@media screen and (max-width: 768px){
+    .pfp-nav{
+        display: block;
+        border-bottom: 3px solid #e91e63;
+    }
 }
 
 .pfp-nav li {
     padding: 0;
-    background-color: #ffffff;
     margin: 0;
 }
 
@@ -475,46 +477,50 @@ ul.offcanvasLinks li {
     text-decoration: none;
     display: block;
     padding: 20px 16px 16px;
-    border-left: 3px solid transparent;
-    line-height: 20px;
 }
 
 
 .pfp-nav li a:hover {
     color: #e91e63;
     background-color: rgba(165, 165, 165, 0.1);
-    border-left-color: #eb4079;
 }
 
 
 
 .profile-box {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    border-left: 2px solid #e91e63;
     align-items: center;
     justify-content: center;
     text-align: center;
     padding: 10px 10px
 }
 
-@media (max-width: 768px) {
-    .profile-box {
-        margin-left: 129px;
-        width: 241px;
-    }
-}
 
 .profile-box-change {
-    border: 1px solid #1b1b1b;
-    border-left: 2px solid #e91e63;
     padding: 10px 10px
 }
 
 .profile-img img {
     border-radius: 50%;
-    height: 120px;
-    width: 120px;
+    height: 168px;
+    width: 162px;
 }
+.profile-img-p img {
+    border-radius: 50%;
+    height: 168px;
+    width: 162px;
+}
+.profile-spans{
+    text-align: left;
+}
+.profile-spans h4{
+    display: inline-block;
+    width: 50px;
+}
+
+.profile-spans span{
+    margin-left: 100px;
+}
+
 
 .form-control:focus {
     box-shadow: none;
@@ -622,11 +628,10 @@ div.error-back {
     padding: 10px 0 10px 15px;
     font-weight: 400;
     color: #e91e63;
-    background: #383838;
-    border: 1px solid #1b1b1b;
+    border: 1px solid #4c4c4c;
     border-radius: 3px;
     outline: 0;
-    text-indent: 50px;
+    text-indent: 40px;
     transition: all .3s ease-in-out;
     justify-content: center;
 }
@@ -647,13 +652,17 @@ div.error-back {
     text-align: center;
 }
 
-.profile-card {
-    box-shadow: inset 5px 5px 5px rgba(0, 0, 0, 0.05),
-        inset -5px -5px -5px rgba(255, 255, 255, 0.5),
-        -5px -5px -5px rgba(255, 255, 255, 0.5),
-        -5px -5px -5px rgba(255, 255, 255, 0.5);
+.wallet-btn{
+    background-color: #e91e63;
+    color: white;
+    border-radius: 25px;
+    width: 20%;
 }
 
+.wallet-btn:hover{
+    background-color: #1b1b1b;
+    color: white;
+}
 
 .imageBtn {
     background: none;
@@ -928,4 +937,20 @@ div.card-footer{
 .column-labels{
     border-bottom: 5px solid #e91e63;
     margin-bottom: 10px;
+}
+
+
+/* Apply dollar signs */
+.product .product-price:before, .product .product-line-price:before, .totals-value:before {
+    content: '$';
+  }
+
+
+.profile-container{
+    background-color: #fff;
+    border-radius: 25px;
+    padding: 50px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
 }

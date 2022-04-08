@@ -5,9 +5,8 @@ Wallet
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid profile-card">
-    <div class="row justify-content-center">
-        <div class="col-2">
+<div class="container-fluid profile-container">
+        <div class="col-12">
             <ul class="pfp-nav">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/profile/edit">Edit Profile</a></li>
@@ -17,7 +16,7 @@ Wallet
             </ul>
         </div>
 
-        <div class="col-10 profile-box-change">
+        <div class="col-12 profile-box-change">
             <div class="container">
                 <div class="row">
                     <div class="col-4"><span class="balance ms-2 float-start">BALANCE</span></div>
@@ -37,7 +36,7 @@ Wallet
                     </span>
                 </div>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <button type="button" class="btn wallet-btn" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                     Add
                 </button>
 
@@ -63,6 +62,5 @@ Wallet
                 </div>
             </form>
         </div>
-    </div>
 </div>
 {% endblock %}

@@ -289,6 +289,8 @@ def profile_wallet():
 @login_required
 def profile_language():
     user_id = session["user_id"]
+    if request.method == "POST":
+        return redirect("/profile/language")
     return render_template("language.html")
 
 
@@ -409,7 +411,7 @@ def buy(title, price, picture):
     return ('', 204)
 
 
-@app.route("/cart")
+@app.route("/cart", methods=["GET", "POST"])
 @login_required
 def cart():
 
@@ -418,7 +420,16 @@ def cart():
     # Get items from the cart
     items = db.execute("SELECT * from cart where user_id=?", user_id)
 
-    
+    if request.method == "POST":
+        quantity = request.form.get("quantity")
+        for field in quantity:
+            Quan = quantity
+
+            for row in db.execute("SELECT price FROM cart"):
+                price = db.execute("Select price from cart where user_id=?", user_id)[0]["price"]
+
+        total = Quan * price
+        print(total)
 
     return render_template("cart.html", rows=items)
 

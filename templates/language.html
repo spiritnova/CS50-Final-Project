@@ -5,9 +5,8 @@ Language
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid profile-card">
-    <div class="row justify-content-center">
-        <div class="col-2">
+<div class="container-fluid profile-container">
+        <div class="col-12">
             <ul class="pfp-nav">
                 <li><a href="/profile">Profile</a></li>
                 <li><a href="/profile/edit">Edit Profile</a></li>
@@ -17,7 +16,7 @@ Language
             </ul>
         </div>
 
-        <div class="col-10 profile-box">
+        <div class="col-12 profile-box">
             <form action="/profile/language" method="post">
                 <select class="form-select mb-2" aria-label="Default select example">
                     <option selected>Choose your preffered language</option>
@@ -26,7 +25,8 @@ Language
                     <option value="3">Japanese (jp)</option>
                   </select>
 
-                  <button class="btn btn-primary">Submit</button>
+                  <button class="btn wallet-btn">Submit</button>
             </form>
+        </div>
         </div>
 {% endblock %}

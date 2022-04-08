@@ -5,9 +5,8 @@ Edit profile
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid profile-card">
-  <div class="row justify-content-center profile-card">
-    <div class="col-2">
+<div class="container-fluid profile-container">
+    <div class="col-12">
       <ul class="pfp-nav">
         <li><a href="/profile">Profile</a></li>
         <li><a href="/profile/edit">Edit Profile</a></li>
@@ -16,7 +15,7 @@ Edit profile
         <li><a href="/profile/language">Language</a></li>
       </ul>
     </div>
-    <div class="col-10 profile-box">
+    <div class="col-12 profile-box">
       <div class="profile-img">
         <img src="/static/pictures/{{ session["picture"] }}">
       </div>
@@ -43,9 +42,9 @@ Edit profile
           <option value="2">Female</option>
           <option value="3">Prefer not to say</option>
         </select>
-        <button type="submit" class="btn btn-primary">Submit</>
+        <button type="submit" class="btn wallet-btn">Submit</>
       </form>
     </div>
-  </div>
+
 </div>
 {% endblock %}
