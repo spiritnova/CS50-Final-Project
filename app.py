@@ -69,6 +69,7 @@ db.execute("CREATE TABLE IF NOT EXISTS transactions ( \
     book_title  NOT NULL, \
     book_amount NUMERIC NOT NULL, \
     price       NUMERIC NOT NULL, \
+    picture     TEXT, \
     time TEXT, \
     PRIMARY KEY(id), FOREIGN KEY (user_id) \
         REFERENCES users(id), \
@@ -334,14 +335,6 @@ def readmoreSciFi(genre):
 
 @app.route("/books", methods=["POST", "GET"])
 def books():
-    if request.method == "POST":
-        title = request.form.get("search")
-        if title:
-            searchedTitle = db.execute("SELECT * from bookList where title LIKE ?", "%" + title + "%")
-            return render_template("books.html", rows=searchedTitle)
-        if not title:
-            return render_template("apology.html", message="Title cannot be blank")
-
     rows = db.execute("SELECT * from bookList")
     return render_template("books.html", rows=rows)
 
@@ -421,17 +414,59 @@ def cart():
     items = db.execute("SELECT * from cart where user_id=?", user_id)
 
     if request.method == "POST":
-        quantity = request.form.get("quantity")
-        for field in quantity:
-            Quan = quantity
+        cartData = request.get_json()
+        print(cartData)
+        total = 0
+        subtotal = 0
+        remain = 0
 
-            for row in db.execute("SELECT price FROM cart"):
-                price = db.execute("Select price from cart where user_id=?", user_id)[0]["price"]
+        # Geting the time
 
-        total = Quan * price
-        print(total)
+        now = datetime.now()
+
+        time = now.strftime("%Y-%m-%d %H:%M:%S")
+
+        for item in cartData:
+            title = item["title"]
+            price = db.execute("select price from bookList where title=?", title)[0]["price"]
+            book_id = db.execute("SELECT book_id from bookList where title=?", title)[0]["book_id"]
+            image = db.execute("SELECT picture from bookList where title=?", title)[0]["picture"]
+            quantity = item["quantity"]
+
+            total = price * int(quantity)
+
+            subtotal = total + subtotal
+
+            # Finally deducting the cash from the user
+
+            cash = db.execute("select cash from users where id=?", user_id)[0]["cash"]
+
+            remain = cash - subtotal
+            print(remain)
+
+            if remain < 0:
+                return "", 400
+
+            else:
+                db.execute("INSERT into transactions (user_id, book_id, book_title, book_amount, price, time, picture) VALUES(?, ?, ?, ?, ?, ?, ?)", \
+                                                user_id, book_id, title, quantity, price, time, image)
+        
+
+        db.execute("UPDATE users SET cash=? WHERE id=?", remain, user_id)
+
+        db.execute("DELETE from cart where user_id=?", user_id)
+
+        return render_template("cart.html")
 
     return render_template("cart.html", rows=items)
+
+@app.route("/history")
+def template_errors():
+    user_id = session["user_id"]
+
+    rows = db.execute("SELECT * FROM transactions where user_id=?", user_id)
+    return render_template("history.html", rows=rows)
+    
 
 @app.route("/cart/remove/<title>")
 def cartRemove(title):
@@ -441,6 +476,21 @@ def cartRemove(title):
     remove = db.execute("DELETE from cart where title=? and user_id=?", title, user_id)
 
     return redirect("/cart")
+
+
+
+@app.route("/library")
+def library():
+    user_id = session["user_id"]
+
+    # Getting the number of books owned by the user
+    count = db.execute("SELECT * from transactions where user_id=? GROUP BY book_title", user_id)
+
+    countlen = len(count)
+
+    rows = db.execute("SELECT book_id, book_title, SUM(book_amount), price, picture, time FROM transactions where user_id=? GROUP BY book_title", user_id)
+
+    return render_template("library.html", rows=rows, count=countlen)
 
 @app.errorhandler(404)
 def page_not_found(e):

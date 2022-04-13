@@ -136,7 +136,7 @@ nav {
 
 
 
-/* Reg Button */
+/*-------------------- Register / Login--------------------------- */
 .regBtn {
     padding: 0.75rem 3rem;
     border-radius: 30px;
@@ -354,7 +354,7 @@ section .contentBx .formBx .sci li i {
 
 
 
-/* PROFILE OFFCANVAS RELATED STUFF */
+/* --------------------PROFILE OFFCANVAS RELATED STUFF --------------*/
 ul.offcanvasLinks {
     display: flex;
     flex-direction: column;
@@ -434,7 +434,7 @@ ul.offcanvasLinks li {
 
 .offcanvas-header .btn-close {
     padding: 1.5rem 0.5rem;
-    color: white;
+    color: black;
 }
 
 .btn-close:focus {
@@ -531,9 +531,10 @@ ul.offcanvasLinks li {
 }
 
 .btn-primary {
-    background-color: #292929;
-    color: #e91e63;
+    background-color: #eb4079;
+    color: #fff;
     border: 2px solid transparent;
+    border-radius: 2px;
 }
 
 .btn:focus {
@@ -817,19 +818,23 @@ div.card-footer{
     outline: none;
 }
 
-.searchContainer i{
-    position: absolute;
-    margin-left: 255px;
-}
 
 .searchContainer{
-    width: 100%;
-    margin-bottom: 10px;
+    position: relative;
+    margin-left: 500px;
 }
-.searchIcon
+.searchContainer .fa-magnifying-glass
 {
-    min-width: 40px;
-    padding: 10px;
+    position: absolute;
+    top: 10px;
+    left: 249px;
+    color: black;
+}
+
+@media screen and (max-width: 750px){
+    .searchContainer .fa-magnifying-glass{
+        left : 156px;
+    }
 }
 
 
@@ -849,7 +854,6 @@ div.card-footer{
     background-color: #fff;
     color: #1b1b1b;
 }
-
 
 /*----------------------------------Cart-----------------------*/
 .shopping-cart{
@@ -915,7 +919,7 @@ div.card-footer{
     float: left;
 }
 
-.checkout{
+#buy{
     background-color: #eb4079;
     color: white;
     border: 0;
@@ -925,7 +929,7 @@ div.card-footer{
     margin-top: 20px;
 }
 
-.checkout:hover{
+#buy:hover{
     background-color: #1b1b1b;
 }
 
@@ -953,4 +957,76 @@ div.card-footer{
     align-items: center;
     text-align: center;
     justify-content: center;
+}
+
+
+/*----------LIBRARY--------*/
+.library{
+    color: white;
+    text-align: center;
+    font-size: 60px;
+    position: relative;
+    margin-top: 50px;
+}
+
+
+.library-card{
+    background-color: #fff;
+    border-radius: 15px;
+    height: 100%;
+    padding: 50px;
+}
+
+.library-wrapper{
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(rgb(255, 165, 220), #1b1b1b);
+    display: inline-block;
+}
+
+.noCash{
+    color: white;
+    text-align: center;
+    margin-top: 50px;
+    border-radius: 50px;
+    background-color: #a11717;
+    font-size: 20px;
+    display: none;
+}
+
+.noCash-btn
+{
+    background-color: #a11717;
+    border: none;
+    position: absolute;
+    right: 200px;
+    color: white;
+}
+
+.history-btn{
+    text-decoration: none;
+    padding: 0.5rem;
+    background-color: #573e55;
+    color: white;
+}
+
+.history-btn:hover{
+    background-color: white;
+    color: #573e55;
+}
+
+.history-btn-div{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.owned{
+    font-family: 'Roboto', sans-serif;
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+
+.hide{
+    display: none;
 }

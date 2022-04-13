@@ -8,7 +8,6 @@ Cart
 <h1 class="text-white mb-5">Shopping Cart</h1>
 
 <div class="shopping-cart">
-<form action="/cart" method="post">
   <div class="column-labels row">
     <h4 class="col-4 text-center">Item Name</h4>
     <h4 class="col-2">Price</h4>
@@ -42,109 +41,72 @@ Cart
 
   <div class="totals col-4">
     <div class="totals-item">
-      <label class="col-10">Subtotal</label>
-      <div class="totals-value" id="cart-subtotal">71.97</div>
-    </div>
-    <div class="totals-item">
-      <label class="col-10">Shipping</label>
-      <div class="totals-value" id="cart-shipping">15.00</div>
-    </div>
-    <div class="totals-item totals-item-total">
       <label class="col-10">Grand Total</label>
-      <div class="totals-value" id="cart-total">90.57</div>
+      <div class="totals-value" id="cart-subtotal">71.97</div>
     </div>
   </div>
 
-  <button class="checkout">Checkout</button>
-</form>
+  <button id="buy">Checkout</button>
 </div>
-
+<div class="noCash">
+  Insufficient Funds!!!
+  <button class="noCash-btn">
+    <i class="fa-solid fa-xmark"></i>
+  </button>
+</div>
 <script>
+
+  const products = document.querySelectorAll(".product")
+  const buyBtn = document.querySelector("#buy")
+
+
+  buyBtn.addEventListener("click", () => {
+    const cartData = []
+
+    // Looping over the rows of products
+    for (const product of products) {
+
+      // going through each product and creating an object out of it
+      const entry = {
+        title: product.querySelector(".product-title").innerText,
+        quantity: product.querySelector("input").value
+      }
+
+      cartData.push(entry)
+
+    }
+
+    fetch("/cart", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify(cartData)
+    })
+      .then(res => {
+          if (res.status === 400){
+            document.querySelector(".noCash").style.display = "block";
+          }
+      })
+      .catch(err => {
+        // ...
+      })
+
+
+  })
+
+  // removing the product on click
   $(".remove-product").on('click', function () {
     $(this).closest('div.product').remove();
   });
 
 
-//   function getVal(){
-//     let quantity = document.querySelector('#quantity').value;
-    
-//     let price = null
+  // removing the insufficient funds onClick
 
-//     {% if rows %}
-//     {% for row in rows %}
-//       price = JSON.parse('{{ row["price"] | tojson }}');
-//       {% endfor %}  
-//     {% endif %}
-
-//     if (price !== null)
-//     {
-//       total = quantity * price;
-//       document.querySelector(".product-line-price").innerText = "$" + total;
-//     }
-//   }
-
-  // Here is where I handle the default value that should be displayed
-
-  let defprice = null
-
-  {% if rows %}
-    defprice = JSON.parse('{{ rows[0]["price"] | tojson }}');
-  {% endif %}
-
-  
-    if (defprice !== null)
-    {
-      document.querySelector(".product-line-price").innerText = defprice;
-    }
+  $(".noCash-btn").on('click', function () {
+    $(this).closest(".noCash").remove();
+  })
 
 
-/* Set rates + misc */
-var shippingRate = 15.00; 
-var fadeTime = 300;
 
-
-/* Assign actions */
-$('.product-quantity input').change( function() {
-  updateQuantity(this);
-});
-
-
-/* Recalculate cart */
-function recalculateCart()
-{
-  var subtotal = 0;
-  
-  /* Sum up row totals */
-  $('.product').each(function () {
-    subtotal += parseFloat($(this).children('.product-line-price').text());
-  });
-
-}
-
-
-/* Update quantity */
-function updateQuantity(quantityInput)
-{
-  /* Calculate line price */
-  var productRow = $(quantityInput).parent().parent();
-  let price = null
-  {% if rows %}
-    {% for row in rows %}
-      price = JSON.parse('{{ row["price"] | tojson}}');
-    {% endfor %}
-  {% endif %}
-  var quantity = $(quantityInput).val();
-  var linePrice = price * quantity;
-  
-  /* Update line price display and recalc cart totals */
-  productRow.children('.product-line-price').each(function () {
-    $(this).fadeOut(fadeTime, function() {
-      $(this).text(linePrice.toFixed(2));
-      recalculateCart();
-      $(this).fadeIn(fadeTime);
-    });
-  });  
-}
- </script>
+</script>
 
 {% endblock %}

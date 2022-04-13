@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}
+History
+{% endblock %}
+
+{% block main %}
+
+<h1 class="library">HISTORY</h1>
+<table class="table text-white table-hover table-dark">
+    <thead>
+      <tr>
+        <th scope="col">Book_ID</th>
+        <th scope="col">Title</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Price</th>
+        <th scope="col">Timestamp</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for row in rows %}
+      <tr>
+        <td>{{ row["book_id"] }}</td>
+        <td>{{ row["book_title"] }}</td>
+        <td>{{ row["book_amount"] }}</td>
+        <td>{{ row["price"] }}</td>
+        <td>{{ row["time"] }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

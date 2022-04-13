@@ -29,26 +29,24 @@ Books
         <button class="genreBTN" type="submit">Search</button>
       </form>
     </div>
-    <div class="col-6">
+
+    <div class="col-8">
       <div class="searchContainer">
-        <i class="fa-solid fa-magnifying-glass searchIcon"></i>
-        <form action="/books" method="post">
-          <input type="text" name="search" class="bookSearch" placeholder="search...">
-        </form>
+          <input type="text" name="search" class="bookSearch" placeholder="search..." data-search>
+        <i class="fa-solid fa-magnifying-glass"></i>
       </div>
     </div>
   </div>
 </div>
-
 <br>
 <div class="container">
-  <div class="row">
+  <div class="row g-3">
     {% for row in rows %}
-    <div class="col-lg-4 col-md-auto">
-      <div class="card mb-3" style="max-width: 540px; height: 300px;">
+    <div class="col-12 col-md-6 col-lg-4  books-product">
+      <div class="card mb-3 h-100">
         <div class="row g-0">
           <div class="col-md-4">
-            <img src="/static/Book covers/{{ row["picture"] }}" class="img-fluid rounded-start" alt="...">
+            <img src="/static/Book covers/{{ row["picture"] }}" class="img-fluid" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -67,4 +65,54 @@ Books
     {% endfor %}
   </div>
 </div>
+
+<script>
+  const searchInput = document.querySelector("[data-search]");
+  // const products = document.querySelectorAll(".books-product")
+
+  // let books = [];
+  
+  // (function () {
+
+  //   for (const product of products){
+  //     const card = cardTemp.content.cloneNode(true).children[0]
+
+  //     const book = {
+  //       title: product.querySelector(".card-title").innerText,
+  //       element: card
+  //     }
+
+  //     books.push(book)
+  //   }
+  // })()
+
+  // console.log(books)
+
+const products = document.querySelectorAll(".books-product")
+
+let books = []
+
+products.forEach(elem => {
+  const book = {
+    element: elem,
+    title: elem.innerText.slice(7)
+  }
+
+  books.push(book)
+  console.log(books)
+})
+
+
+  searchInput.addEventListener("input", (e) => {
+    const value = e.target.value.toLowerCase()
+
+    books.forEach(book => {
+      const isVisible = book.title.toLowerCase().includes(value);
+
+      book.element.classList.toggle("hide", !isVisible)
+    })
+  })
+
+
+</script>
 {% endblock %}

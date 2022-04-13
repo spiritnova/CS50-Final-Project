@@ -7,13 +7,13 @@
 {% block main %}
 <h4 class="text-white">Search Results</h4>
   <div class="container">
-    <div class="row">
+    <div class="row g-3">
       {% for row in rows %}
-      <div class="col-4">
-        <div class="card mb-3" style="max-width: 540px; height: 220px;">
+      <div class="col-12 col-md-6 col-lg-4">
+        <div class="card mb-3 h-100">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="/static/Book covers/{{ row["picture"] }}" class="img-fluid rounded-start" alt="...">
+              <img src="/static/Book covers/{{ row["picture"] }}" class="img-fluid" alt="...">
             </div>
             <div class="col-md-8">
               <div class="card-body">
@@ -22,6 +22,7 @@
                 <p class="card-text"><span class="readmore-txt">Price: </span>{{ row["price"] | usd }}</p>
                 <p class="card-text"><span class="readmore-txt">Rating: </span>{{ row["rating"] }}</p>
                 <p class="card-text"><span class="readmore-txt">Published Year: </span>{{ row["publishedDate"] }}</p>
+                <a href="/buy/{{ row["title"] }}/{{ row["price"] }}/{{ row["picture"] }}" class="btn btn-primary" name="purchase">Add to Cart</a>
               </div>
             </div>
           </div>
