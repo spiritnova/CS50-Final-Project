@@ -24,3 +24,25 @@ const navSlide = () =>{
 }
 
 navSlide();
+
+// const products = document.querySelectorAll(".product")
+
+// products.forEach(itemRow => {
+
+    
+// })
+
+
+    
+
+
+
+
+    
+
+
+
+
+
+
+

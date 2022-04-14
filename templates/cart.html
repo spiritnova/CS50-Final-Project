@@ -27,14 +27,14 @@ Cart
       </div>
       <div class="product-price col-2">{{ row["price"] }}</div>
       <div class="product-quantity col-2">
-        <input type="number" name="quantity" value="1" min="1">
+        <input type="number" name="quantity" value="1" min="1" data-quantity>
       </div>
       <div class="product-removal col-2">
         <a class="remove-product" href="/cart/remove/{{ row["title"] }}">
           Remove
         </a>
       </div>
-      <div class="product-line-price col-2"></div>
+      <div class="product-line-price col-2">{{ row["price"] }}</div>
     </div>
   </div>
   {% endfor %}
@@ -42,7 +42,7 @@ Cart
   <div class="totals col-4">
     <div class="totals-item">
       <label class="col-10">Grand Total</label>
-      <div class="totals-value" id="cart-subtotal">71.97</div>
+      <div class="totals-value" id="cart-total">71.97</div>
     </div>
   </div>
 
@@ -58,7 +58,46 @@ Cart
 
   const products = document.querySelectorAll(".product")
   const buyBtn = document.querySelector("#buy")
+  const quantityInput = document.querySelector("[data-quantity]")
 
+  function recalculateCart()
+  {
+    let grandTotal = 0;
+
+    // Sum up row Totals
+    products.forEach(itemRow => {
+      const eachTotal = parseFloat(itemRow.querySelector(".product-line-price").innerText)
+
+      grandTotal += eachTotal
+    })
+
+    $(".totals-value").fadeOut(300, function() {
+      $("#cart-total").html(grandTotal.toFixed(2));
+      $(".totals-value").fadeIn(300);
+    })
+  }
+
+  recalculateCart()
+
+
+
+  products.forEach(itemRow => {
+
+    itemRow.querySelector("[data-quantity]").addEventListener("change", (e) => {
+
+      const total_elem = itemRow.querySelector(".product-line-price")
+
+      const price = parseFloat(itemRow.querySelector(".product-price").innerText)
+      const quantity = parseInt(e.target.value)
+
+      // Calculate the total
+      total_elem.innerText = price * quantity
+
+      
+      // Recalculating the cart whenever the user changes the quantity
+      recalculateCart();
+    })
+  })
 
   buyBtn.addEventListener("click", () => {
     const cartData = []
@@ -84,6 +123,9 @@ Cart
       .then(res => {
           if (res.status === 400){
             document.querySelector(".noCash").style.display = "block";
+          }
+          else{
+            window.location.reload();
           }
       })
       .catch(err => {

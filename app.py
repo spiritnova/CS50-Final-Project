@@ -456,7 +456,6 @@ def cart():
 
         db.execute("DELETE from cart where user_id=?", user_id)
 
-        return render_template("cart.html")
 
     return render_template("cart.html", rows=items)
 

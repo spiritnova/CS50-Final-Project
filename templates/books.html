@@ -56,7 +56,7 @@ Books
                 <p class="card-text"><span class="readmore-txt">Price: </span>{{ row["price"] | usd }}</p>
                 <p class="card-text"><span class="readmore-txt">Rating: </span>{{ row["rating"] }}</p>
                 <p class="card-text"><span class="readmore-txt">Published Year: </span>{{ row["publishedDate"] }}</p>
-                <a href="/buy/{{ row["title"] }}/{{ row["price"] }}/{{ row["picture"] }}" class="btn btn-primary" name="purchase">Add to Cart</a>
+                <a href="/buy/{{ row["title"] }}/{{ row["price"] }}/{{ row["picture"] }}" class="btn btn-primary onAdd" name="purchase">Add to Cart</a>
             </div>
           </div>
         </div>
@@ -67,27 +67,7 @@ Books
 </div>
 
 <script>
-  const searchInput = document.querySelector("[data-search]");
-  // const products = document.querySelectorAll(".books-product")
-
-  // let books = [];
-  
-  // (function () {
-
-  //   for (const product of products){
-  //     const card = cardTemp.content.cloneNode(true).children[0]
-
-  //     const book = {
-  //       title: product.querySelector(".card-title").innerText,
-  //       element: card
-  //     }
-
-  //     books.push(book)
-  //   }
-  // })()
-
-  // console.log(books)
-
+const searchInput = document.querySelector("[data-search]");
 const products = document.querySelectorAll(".books-product")
 
 let books = []
@@ -99,7 +79,6 @@ products.forEach(elem => {
   }
 
   books.push(book)
-  console.log(books)
 })
 
 
